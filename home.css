@@ -1,0 +1,88 @@
+.content-container .h3:last-of-type {
+    margin-top: 3rem;
+}
+
+.mobile .content-container .h3:last-of-type {
+    margin-top: 4rem;
+}
+
+[id="L3482832595"].page {
+	min-height: var(--viewport-height);
+}
+
+[id="L3482832595"] .page-content {
+	padding-left: 2rem;
+	padding-top: 4.5rem;
+	width: 100%;
+	align-items: flex-start;
+}
+
+[id="L3482832595"] .backdrop::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(to left, 
+		rgba(0,0,0,0) 0%, 
+		rgba(0,0,0,0.9) 80%,
+		rgba(0,0,0,1) 100%
+	);
+	pointer-events: none;
+	z-index: 1;
+}
+
+.mobile [id="L3482832595"] .backdrop::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(to top, 
+		rgba(0,0,0,0) 0%, 
+		rgba(0,0,0,.9) 60%,
+		rgba(0,0,0,1) 100%
+	);
+	pointer-events: none;
+	z-index: 1;
+}
+
+.work-title-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* Card Title with Arrow */
+.work-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+}
+
+.work-title-link:hover .work-title {
+    color: rgb(210, 192, 255);
+}
+
+.work-title-arrow {
+    display: inline-flex;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+    transition: all 0.15s ease-in;
+}
+
+.work-title-arrow svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+}
+
+.work-title-link:hover .work-title-arrow {
+    transform: translate(2px, -2px);
+    color: rgb(210, 192, 255);
+}
