@@ -271,21 +271,20 @@
 }
 
 /* Repository Icon */
-.repo-icon-link {
+.repo-icon {
     display: block;
     width: 24px;
     height: 24px;
+    cursor: pointer;
     position: relative;
     transition: color 0.15s ease-in;
-    color: inherit;
-    text-decoration: none;
 }
 
-.repo-icon-link:hover {
+.repo-icon:hover {
     color: #9272e4;
 }
 
-.repo-icon-link svg {
+.repo-icon svg {
     width: 100%;
     height: 100%;
     stroke: currentColor;
@@ -302,7 +301,6 @@
     color: #e0e0e0;
     padding: 4px 8px;
     border-radius: 6px;
-    font-size: 0.75rem;
     white-space: nowrap;
     pointer-events: none;
     opacity: 0;
@@ -312,7 +310,7 @@
 }
 
 .team-icon:hover .tooltip,
-.repo-icon-link:hover .tooltip {
+.repo-icon:hover .tooltip {
     opacity: 1;
     visibility: visible;
 }
@@ -401,7 +399,6 @@
     color: #9272e4;
     padding: 4px 8px;
     border-radius: 6px;
-    font-size: 0.7rem;
     white-space: nowrap;
     pointer-events: none;
     opacity: 0;
