@@ -297,7 +297,7 @@
     top: 50%;
     transform: translateY(-50%);
     background: hsl(0, 0%, 15%);
-    border: 1px solid hsl(0, 0%, 25%);
+    border: 1px solid #404040;
     color: #e0e0e0;
     padding: 4px 8px;
     border-radius: 6px;
@@ -319,7 +319,7 @@
 .team-popover {
     position: absolute;
     background: hsl(0, 0%, 12%);
-    border: 1px solid hsl(0, 0%, 25%);
+    border: 1px solid #404040;
     border-radius: 8px;
     padding: 0.5rem;
     z-index: 9999;
@@ -395,7 +395,7 @@
     top: 50%;
     transform: translateY(-50%);
     background: hsl(0, 0%, 8%);
-    border: 1px solid hsl(0, 0%, 25%);
+    border: 1px solid #404040;
     color: #9272e4;
     padding: 4px 8px;
     border-radius: 6px;
@@ -438,7 +438,7 @@
     display: inline-block;
     padding: 4px 10px;
     background: rgba(210, 192, 255, 0.15);
-    border: 1px solid hsl(0, 0%, 25%);
+    border: 1px solid #404040;
     border-radius: 6px;
     white-space: nowrap;
 }

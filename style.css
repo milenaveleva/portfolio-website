@@ -4,16 +4,10 @@ html {
 }
 
 body {
-	--swatch-1: rgba(255, 255, 255, 0.85);
-	--swatch-2: rgba(255, 255, 255, 0.75);
-	--swatch-3: rgba(255, 255, 255, 0.6);
-	--swatch-4: rgba(255, 255, 255, 0.4);
-	--swatch-5: rgba(255, 255, 255, 0.25);
-	--swatch-6: rgba(255, 255, 255, 0.15);
-	background-color: #000000;
-	--swatch-7: #9272e4;
-	--swatch-8: #d2c0ff;
-	--swatch-9: rgba(233, 214, 214, 0.5);
+    background-color: #000000;
+	--swatch-1: #9272e4;
+	--swatch-2: #d2c0ff;
+	--swatch-3: rgba(233, 214, 214, 0.5);
 }
 
 body.mobile {
@@ -93,7 +87,6 @@ bodycopy {
 	font-style: normal;
 	line-height: 1.15;
 	letter-spacing: 0;
-	display: block;
 	font-variation-settings: 'slnt' 0, 'MONO' 0;
 }
 
@@ -133,7 +126,7 @@ h2 {
 	font-style: normal;
 	font-weight: 500;
 	margin: 0;
-	color: rgba(233, 214, 214, 0.8);
+	color: rgba(233, 214, 214, 0.7);
 	font-size: 4rem;
 	line-height: 1;
 	letter-spacing: 0;
@@ -295,7 +288,7 @@ media-item::part(media) {
 
 .h4 {
 	--text-style: "h4";
-	font-size: 1rem;
+	font-size: 1.1rem;
 	font-weight: 400;
 	color: rgba(233, 214, 214, 0.6);
 	font-family: "Monument Grotesk Variable";
@@ -335,6 +328,28 @@ media-item::part(media) {
 }
 
 .small a:hover {
+	
+}
+
+.h5 {
+	--text-style: "h5";
+	font-size: 1rem;
+	font-weight: 350;
+	color: rgba(255, 255, 255, 0.9);
+	font-family: "Monument Grotesk Variable";
+	font-style: normal;
+	line-height: 1;
+	letter-spacing: 0;
+	font-variation-settings: 'slnt' 0, 'MONO' 0;
+	display: inline-block;
+}
+
+.h5 a {
+	color: #9272e4;
+	text-decoration: none;
+}
+
+.h5 a:hover {
 	
 }
 
