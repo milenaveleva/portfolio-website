@@ -13,6 +13,16 @@ body {
 body.mobile {
 }
 
+::selection {
+	color: #9272E4;
+	background: transparent;
+}
+
+::-moz-selection {
+	color: #9272E4;
+	background: transparent;
+}
+
 a:active,
 .linked:active,
 .zoomable::part(media):active {
