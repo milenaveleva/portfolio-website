@@ -990,224 +990,147 @@
 </div>
 
 <script>
-// Team popover functionality - position and show/hide
-document.addEventListener('DOMContentLoaded', function() {
-	console.log('Team popover script loaded');
+// Team popover functionality - simple and reliable
+(function() {
+	'use strict';
 	
-	// Check for empty repo links and grey them out
-	const repoIcons = document.querySelectorAll('.repo-icon');
-	repoIcons.forEach(repoIcon => {
-		const href = repoIcon.getAttribute('href');
-		if (!href || href === '#' || href.trim() === '') {
-			repoIcon.classList.add('disabled');
-			console.log('Disabled repo icon with empty href');
+	let activePopover = null;
+	let activeCheckbox = null;
+	
+	function init() {
+		console.log('Initializing team popovers');
+		
+		// Find all checkboxes
+		const checkboxes = document.querySelectorAll('.check-popover-team');
+		console.log('Found', checkboxes.length, 'checkboxes');
+		
+		if (checkboxes.length === 0) {
+			console.log('No checkboxes found, will retry');
+			return false;
 		}
-	});
-	
-	// Check for empty team popovers and grey out corresponding team icons
-	const teamPopovers = document.querySelectorAll('.team-popover');
-	teamPopovers.forEach(popover => {
-		const teamMembers = popover.querySelectorAll('.team-member');
-		if (teamMembers.length === 0) {
-			const popoverId = popover.id;
-			const checkboxId = 'team-checkbox-' + popoverId.replace('popover-', '');
-			const checkbox = document.getElementById(checkboxId);
-			if (checkbox) {
-				const teamIcon = checkbox.closest('.team-icon');
-				if (teamIcon) {
-					teamIcon.classList.add('disabled');
-					// Disable the checkbox too
-					checkbox.disabled = true;
-					console.log('Disabled team icon for empty popover:', popoverId);
+		
+		// Check for empty repo links and grey them out
+		const repoIcons = document.querySelectorAll('.repo-icon');
+		repoIcons.forEach(repoIcon => {
+			const href = repoIcon.getAttribute('href');
+			if (!href || href === '#' || href.trim() === '') {
+				repoIcon.classList.add('disabled');
+				// Update tooltip text for private repos
+				const tooltip = repoIcon.querySelector('.tooltip');
+				if (tooltip) {
+					tooltip.textContent = 'Private repo';
 				}
 			}
-		}
-	});
-	
-	const checkboxes = document.querySelectorAll('.check-popover-team');
-	console.log('Found checkboxes:', checkboxes.length);
-	
-	// Function to position a popover relative to its icon
-	function positionPopover(checkbox, popover, iconWrapper) {
-		const rect = iconWrapper.getBoundingClientRect();
-		const container = document.querySelector('.content-container');
-		const containerRect = container ? container.getBoundingClientRect() : { top: 0, left: 0 };
+		});
 		
-		// Position the popover below and to the left of the icon, relative to container
-		const top = rect.bottom - containerRect.top + 8;
-		const left = rect.right - containerRect.left - popover.offsetWidth;
-		
-		popover.style.top = top + 'px';
-		popover.style.left = left + 'px';
-		
-		console.log('Positioned popover at:', top, left);
-	}
-	
-	// Track which popover is currently being hovered
-	let hoveredPopover = null;
-	// Track which card currently has an active popover
-	let activePopoverCard = null;
-	let activePopoverCheckbox = null;
-	
-	// Handle checkbox changes
-	checkboxes.forEach((checkbox, index) => {
-		const checkboxId = checkbox.id;
-		const popoverId = checkbox.id.replace('team-checkbox-', 'popover-');
-		const popover = document.getElementById(popoverId);
-		const iconWrapper = checkbox.closest('.team-icon-wrapper');
-		const card = checkbox.closest('.portfolio-card');
-		
-		console.log('Processing checkbox', index, ':', checkboxId, 'popover:', popoverId, 'found:', !!popover);
-		
-		if (!popover || !iconWrapper || !card) {
-			console.warn('Missing popover, iconWrapper, or card for', checkboxId);
-			return;
-		}
-		
-		checkbox.addEventListener('change', function(e) {
-			console.log('Checkbox changed:', checkboxId, 'checked:', this.checked);
-			
-			if (this.checked) {
-				// Close all other popovers
-				checkboxes.forEach((cb) => {
-					if (cb !== checkbox && cb.checked) {
-						cb.checked = false;
-						const otherPopover = document.getElementById(cb.id.replace('team-checkbox-', 'popover-'));
-						if (otherPopover) {
-							otherPopover.classList.remove('active');
-						}
+		// Check for empty team popovers and grey out corresponding team icons
+		const teamPopovers = document.querySelectorAll('.team-popover');
+		teamPopovers.forEach(popover => {
+			const teamMembers = popover.querySelectorAll('.team-member');
+			if (teamMembers.length === 0) {
+				const popoverId = popover.id;
+				const checkboxId = 'team-checkbox-' + popoverId.replace('popover-', '');
+				const checkbox = document.getElementById(checkboxId);
+				if (checkbox) {
+					const teamIcon = checkbox.closest('.team-icon');
+					if (teamIcon) {
+						teamIcon.classList.add('disabled');
+						checkbox.disabled = true;
 					}
-				});
+				}
+			}
+		});
+		
+		// Setup checkbox click handlers
+		checkboxes.forEach((checkbox) => {
+			const popoverId = checkbox.id.replace('team-checkbox-', 'popover-');
+			const popover = document.getElementById(popoverId);
+			const iconWrapper = checkbox.closest('.team-icon-wrapper');
+			
+			if (!popover || !iconWrapper) return;
+			
+			checkbox.addEventListener('change', function() {
+				console.log('Checkbox changed:', checkbox.id, 'checked:', checkbox.checked);
 				
-				// Track this as the active popover
-				activePopoverCard = card;
-				activePopoverCheckbox = checkbox;
-				
-				// Position and show this popover
-				positionPopover(checkbox, popover, iconWrapper);
-				popover.classList.add('active');
-				console.log('Popover activated');
-				
-				// Add click listener to close when clicking outside
-				setTimeout(() => {
-					document.addEventListener('click', function closeHandler(event) {
-						if (!iconWrapper.contains(event.target) && !popover.contains(event.target)) {
-							checkbox.checked = false;
-							popover.classList.remove('active');
-							activePopoverCard = null;
-							activePopoverCheckbox = null;
-							document.removeEventListener('click', closeHandler);
+				if (checkbox.checked) {
+					// Close other popovers
+					checkboxes.forEach((cb) => {
+						if (cb !== checkbox && cb.checked) {
+							cb.checked = false;
+							const otherId = cb.id.replace('team-checkbox-', 'popover-');
+							const otherPopover = document.getElementById(otherId);
+							if (otherPopover) otherPopover.classList.remove('active');
 						}
 					});
-				}, 0);
-			} else {
-				popover.classList.remove('active');
-				if (activePopoverCard === card) {
-					activePopoverCard = null;
-					activePopoverCheckbox = null;
-				}
-				console.log('Popover deactivated');
-			}
-		});
-		
-		// Update position on scroll and resize
-		window.addEventListener('scroll', () => {
-			if (checkbox.checked) {
-				positionPopover(checkbox, popover, iconWrapper);
-			}
-		});
-		
-		window.addEventListener('resize', () => {
-			if (checkbox.checked) {
-				positionPopover(checkbox, popover, iconWrapper);
-			}
-		});
-		
-		// Close other card's popover when entering this card
-		card.addEventListener('mouseenter', function(e) {
-			// If there's an active popover from a different card, close it
-			if (activePopoverCard && activePopoverCard !== card && hoveredPopover === null) {
-				console.log('Closing other card\'s popover - entered different card');
-				if (activePopoverCheckbox) {
-					activePopoverCheckbox.checked = false;
-					const activePopoverId = activePopoverCheckbox.id.replace('team-checkbox-', 'popover-');
-					const activePopoverElement = document.getElementById(activePopoverId);
-					if (activePopoverElement) {
-						activePopoverElement.classList.remove('active');
-					}
-					activePopoverCard = null;
-					activePopoverCheckbox = null;
-				}
-			}
-		});
-		
-		// Auto-close popover when leaving card (if not hovering popover)
-		card.addEventListener('mouseleave', function(e) {
-			// Small delay to allow moving from card to popover
-			setTimeout(() => {
-				// Only close if checkbox is checked, popover exists, and we're not hovering the popover
-				if (checkbox.checked && hoveredPopover !== popover) {
-					console.log('Auto-closing popover - left card and not hovering popover');
-					checkbox.checked = false;
+					
+					// Position and show this popover
+					const rect = iconWrapper.getBoundingClientRect();
+					const container = document.querySelector('.content-container');
+					const containerRect = container ? container.getBoundingClientRect() : { top: 0, left: 0 };
+					
+					popover.style.top = (rect.bottom - containerRect.top + 8) + 'px';
+					popover.style.left = (rect.right - containerRect.left - popover.offsetWidth) + 'px';
+					popover.classList.add('active');
+					
+					activePopover = popover;
+					activeCheckbox = checkbox;
+					
+					// Close on outside click
+					setTimeout(() => {
+						const closeHandler = (e) => {
+							if (!iconWrapper.contains(e.target) && !popover.contains(e.target)) {
+								checkbox.checked = false;
+								popover.classList.remove('active');
+								activePopover = null;
+								activeCheckbox = null;
+								document.removeEventListener('click', closeHandler);
+							}
+						};
+						document.addEventListener('click', closeHandler);
+					}, 10);
+				} else {
 					popover.classList.remove('active');
+					if (activePopover === popover) {
+						activePopover = null;
+						activeCheckbox = null;
+					}
 				}
-			}, 50);
+			});
 		});
+		
+		// Prevent popover clicks from closing
+		teamPopovers.forEach(popover => {
+			popover.addEventListener('click', (e) => e.stopPropagation());
+		});
+		
+		console.log('Initialization complete');
+		return true;
+	}
+	
+	// Try to initialize
+	function tryInit() {
+		if (init()) {
+			console.log('Successfully initialized');
+		} else {
+			console.log('Init failed, will retry');
+		}
+	}
+	
+	// On DOM ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', tryInit);
+	} else {
+		tryInit();
+	}
+	
+	// On Cargo page load (for navigation)
+	document.addEventListener('page:load', function() {
+		console.log('page:load event fired');
+		setTimeout(tryInit, 100);
 	});
 	
-	// Prevent popover clicks from closing
-	document.querySelectorAll('.team-popover').forEach(popover => {
-		popover.addEventListener('click', function(e) {
-			e.stopPropagation();
-		});
-		
-		// Keep card hovered when popover is hovered
-		popover.addEventListener('mouseenter', function() {
-			hoveredPopover = this;
-			const popoverId = this.id;
-			const checkboxId = 'team-checkbox-' + popoverId.replace('popover-', '');
-			const checkbox = document.getElementById(checkboxId);
-			if (checkbox) {
-				const card = checkbox.closest('.portfolio-card');
-				if (card) {
-					card.classList.add('popover-hovered');
-				}
-			}
-		});
-		
-		popover.addEventListener('mouseleave', function() {
-			hoveredPopover = null;
-			const popoverId = this.id;
-			const checkboxId = 'team-checkbox-' + popoverId.replace('popover-', '');
-			const checkbox = document.getElementById(checkboxId);
-			if (checkbox) {
-				const card = checkbox.closest('.portfolio-card');
-				if (card) {
-					card.classList.remove('popover-hovered');
-					
-					// Auto-close popover when leaving it
-					setTimeout(() => {
-						// Check if we've moved back to the card or not
-						const cardRect = card.getBoundingClientRect();
-						const mouseX = event.clientX;
-						const mouseY = event.clientY;
-						const isOverCard = (
-							mouseX >= cardRect.left &&
-							mouseX <= cardRect.right &&
-							mouseY >= cardRect.top &&
-							mouseY <= cardRect.bottom
-						);
-						
-						// If not over the card anymore, close the popover
-						if (!isOverCard && checkbox.checked) {
-							console.log('Auto-closing popover - left popover and not over card');
-							checkbox.checked = false;
-							popover.classList.remove('active');
-						}
-					}, 50);
-				}
-			}
-		});
-	});
-});
+	// Fallback after delay
+	setTimeout(tryInit, 500);
+	
+})();
 </script>

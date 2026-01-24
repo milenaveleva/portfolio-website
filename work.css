@@ -240,10 +240,14 @@
     position: relative;
     width: 24px;
     height: 24px;
+    flex-shrink: 0;
 }
 
 .team-icon-wrapper {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Team Icon */
@@ -254,6 +258,8 @@
     cursor: pointer;
     position: relative;
     transition: color 0.15s ease-in, opacity 0.15s ease-in;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .team-icon:hover {
@@ -264,15 +270,21 @@
     width: 100%;
     height: 100%;
     stroke: currentColor;
+    pointer-events: none;
 }
 
 .team-icon .check-popover-team {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
 }
 
 .team-icon.disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 .team-icon.disabled:hover {
@@ -287,6 +299,8 @@
     cursor: pointer;
     position: relative;
     transition: color 0.15s ease-in, opacity 0.15s ease-in;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .repo-icon:hover {
@@ -297,16 +311,24 @@
     width: 100%;
     height: 100%;
     stroke: currentColor;
+    pointer-events: none;
+}
+
+.repo-icon.disabled svg {
+    opacity: 0.3;
 }
 
 .repo-icon.disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    pointer-events: none;
+    cursor: default;
 }
 
 .repo-icon.disabled:hover {
     color: inherit;
+}
+
+.repo-icon.disabled:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Tooltips */
