@@ -253,7 +253,7 @@
     height: 24px;
     cursor: pointer;
     position: relative;
-    transition: color 0.15s ease-in;
+    transition: color 0.15s ease-in, opacity 0.15s ease-in;
 }
 
 .team-icon:hover {
@@ -270,6 +270,15 @@
     display: none;
 }
 
+.team-icon.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.team-icon.disabled:hover {
+    color: inherit;
+}
+
 /* Repository Icon */
 .repo-icon {
     display: block;
@@ -277,7 +286,7 @@
     height: 24px;
     cursor: pointer;
     position: relative;
-    transition: color 0.15s ease-in;
+    transition: color 0.15s ease-in, opacity 0.15s ease-in;
 }
 
 .repo-icon:hover {
@@ -288,6 +297,16 @@
     width: 100%;
     height: 100%;
     stroke: currentColor;
+}
+
+.repo-icon.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.repo-icon.disabled:hover {
+    color: inherit;
 }
 
 /* Tooltips */

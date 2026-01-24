@@ -993,6 +993,37 @@
 // Team popover functionality - position and show/hide
 document.addEventListener('DOMContentLoaded', function() {
 	console.log('Team popover script loaded');
+	
+	// Check for empty repo links and grey them out
+	const repoIcons = document.querySelectorAll('.repo-icon');
+	repoIcons.forEach(repoIcon => {
+		const href = repoIcon.getAttribute('href');
+		if (!href || href === '#' || href.trim() === '') {
+			repoIcon.classList.add('disabled');
+			console.log('Disabled repo icon with empty href');
+		}
+	});
+	
+	// Check for empty team popovers and grey out corresponding team icons
+	const teamPopovers = document.querySelectorAll('.team-popover');
+	teamPopovers.forEach(popover => {
+		const teamMembers = popover.querySelectorAll('.team-member');
+		if (teamMembers.length === 0) {
+			const popoverId = popover.id;
+			const checkboxId = 'team-checkbox-' + popoverId.replace('popover-', '');
+			const checkbox = document.getElementById(checkboxId);
+			if (checkbox) {
+				const teamIcon = checkbox.closest('.team-icon');
+				if (teamIcon) {
+					teamIcon.classList.add('disabled');
+					// Disable the checkbox too
+					checkbox.disabled = true;
+					console.log('Disabled team icon for empty popover:', popoverId);
+				}
+			}
+		}
+	});
+	
 	const checkboxes = document.querySelectorAll('.check-popover-team');
 	console.log('Found checkboxes:', checkboxes.length);
 	
