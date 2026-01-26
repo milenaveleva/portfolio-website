@@ -4,7 +4,7 @@
 	width: 100%;
 	align-items: center;
 	padding-bottom: 2rem;
-	padding-top: 0rem;
+	padding-top: 2rem;
 }
 
 [id="I1694932088"].page {
@@ -66,16 +66,8 @@
 	padding-left: 2rem;
 	padding-right: 2rem;
     padding-bottom: 2rem;
+    padding-top: 16rem;
 	width: 100%;
-	align-items: flex-end;
-}
-
-.title-container {
-	margin-bottom: -2rem;
-}
-
-.content-container {
-	margin-right: .5rem;
 }
 
 .content-container h2 {
