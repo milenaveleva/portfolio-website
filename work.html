@@ -415,7 +415,6 @@
 						<div class="tech-stack">
 							<span class="tech-badge">UE5</span>
 							<span class="tech-badge">C++</span>
-							<span class="tech-badge">VR</span>
 							<span class="tech-badge">Perforce</span>
 							<span class="tech-badge">Confluence</span>
 							<span class="tech-badge">Jira</span>
@@ -423,7 +422,8 @@
 							<span class="tech-badge">MetaQuest</span>
 							<span class="tech-badge">Azure</span>
 							<span class="tech-badge">CI/CD</span>
-							<!-- <span class="tech-badge">Gamedev</span>
+							<!-- <span class="tech-badge">VR</span>
+							<span class="tech-badge">Gamedev</span>
 							<span class="tech-badge">Techdesign</span> -->
 						</div>
 					</div>
@@ -569,6 +569,7 @@
 							<span class="tech-badge">C++</span>
 							<span class="tech-badge">Blueprints</span>
 							<span class="tech-badge">Rider</span>
+							<span class="tech-badge">Perforce</span>
 							<span class="tech-badge">GAS</span>
 							<span class="tech-badge">Git</span>
 							<span class="tech-badge">AWS</span>
@@ -879,7 +880,7 @@
 				<div class="card-content">
 					<div class="card-meta-header">
 						<div class="card-title-wrapper">
-							<a class="card-title-link" href="#" rel="noopener" target="_blank">
+							<a class="card-title-link" href="" rel="noopener" target="_blank">
 								<span class="h3 card-title">
 									_Azure
 									<span class="title-arrow">
@@ -1164,7 +1165,7 @@
 				<div class="card-content">
 					<div class="card-meta-header">
 						<div class="card-title-wrapper">
-							<a class="card-title-link" href="#" rel="noopener" target="_blank">
+							<a class="card-title-link" href="" rel="noopener" target="_blank">
 								<span class="h3 card-title">
 									_Algoraves
 									<span class="title-arrow">
@@ -1302,7 +1303,44 @@
 					if (teamIcon) {
 						teamIcon.classList.add('disabled');
 						checkbox.disabled = true;
+						// Update tooltip text for personal projects
+						const tooltip = teamIcon.querySelector('.tooltip');
+						if (tooltip) {
+							tooltip.textContent = 'Personal Project';
+						}
 					}
+				}
+			}
+		});
+		
+		// Check for empty card title links and grey them out
+		const cardTitleLinks = document.querySelectorAll('.card-title-link');
+		cardTitleLinks.forEach(titleLink => {
+			const href = titleLink.getAttribute('href');
+			if (!href || href === '#' || href.trim() === '') {
+				titleLink.classList.add('disabled');
+				// Prevent clicking
+				titleLink.addEventListener('click', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					return false;
+				});
+				// Create and add tooltip to the link (not inside card-title to avoid opacity inheritance)
+				const cardTitle = titleLink.querySelector('.card-title');
+				if (cardTitle && !titleLink.querySelector('.title-tooltip')) {
+					const tooltip = document.createElement('div');
+					tooltip.className = 'h5 title-tooltip';
+					tooltip.textContent = 'Upload in progress';
+					titleLink.appendChild(tooltip);
+					
+					// Position tooltip relative to card-title on hover
+					titleLink.addEventListener('mouseenter', () => {
+						const titleRect = cardTitle.getBoundingClientRect();
+						const linkRect = titleLink.getBoundingClientRect();
+						const leftOffset = (titleRect.right - linkRect.left) + 12;
+						tooltip.style.left = leftOffset + 'px';
+						tooltip.style.top = '50%';
+					});
 				}
 			}
 		});

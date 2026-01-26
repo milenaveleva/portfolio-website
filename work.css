@@ -3,6 +3,7 @@
 	padding-left: 2rem;
 	padding-right: 2rem;
 	align-items: flex-start;
+	padding-bottom: 2rem;
 }
 
 .mobile [id="D1687404292"] .page-content {
@@ -181,41 +182,81 @@
 
 /* Card Title Link */
 .card-title-link {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	position: relative;
 }
 
 /* Card Title with Arrow */
 .card-title {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    cursor: pointer;
-    transition: color 0.15s ease-in;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	cursor: pointer;
+	transition: color 0.15s ease-in;
+	position: relative;
 }
 
 .card-title-link:hover .card-title {
-    color: #9272e4;
+	color: #9272e4;
 }
 
 .title-arrow {
-    display: inline-flex;
-    align-items: center;
-    width: 14px;
-    height: 14px;
-    transition: all 0.15s ease-in;
+	display: inline-flex;
+	align-items: center;
+	width: 14px;
+	height: 14px;
+	transition: all 0.15s ease-in;
 }
 
 .title-arrow svg {
-    width: 100%;
-    height: 100%;
-    stroke: currentColor;
+	width: 100%;
+	height: 100%;
+	stroke: currentColor;
 }
 
 .card-title-link:hover .title-arrow {
-    transform: translate(2px, -2px);
-    color: #9272e4;
+	transform: translate(2px, -2px);
+	color: #9272e4;
+}
+
+/* Disabled Card Title Link */
+.card-title-link.disabled .card-title {
+    cursor: default;
+}
+
+.card-title-link.disabled:hover .card-title {
+	color: inherit;
+}
+
+.card-title-link.disabled:hover .title-arrow {
+	transform: none;
+	color: inherit;
+}
+
+/* Title Tooltip */
+.title-tooltip {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	background: hsl(0, 0%, 15%);
+	border: 1px solid #404040;
+	color: #e0e0e0;
+	padding: 4px 8px;
+	border-radius: 6px;
+	white-space: nowrap;
+	pointer-events: none;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.15s, visibility 0.15s;
+	z-index: 9998;
+}
+
+.card-title-link.disabled:hover .title-tooltip {
+	opacity: 1;
+	visibility: visible;
 }
 
 .card-icons {
@@ -281,16 +322,22 @@
     pointer-events: none;
 }
 
+.team-icon.disabled svg {
+	opacity: 0.3;
+}
+
 .team-icon.disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    pointer-events: none;
+	cursor: default;
 }
 
 .team-icon.disabled:hover {
-    color: inherit;
+	color: inherit;
 }
 
+.team-icon.disabled:hover .tooltip {
+	opacity: 1;
+	visibility: visible;
+}
 /* Repository Icon */
 .repo-icon {
     display: block;
