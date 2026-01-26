@@ -1,7 +1,7 @@
 [id="D1687404292"] .page-content {
 	padding-top: 4.5rem;
-	padding-left: 2rem;
-	padding-right: 2rem;
+	padding-left: 4rem;
+	padding-right: 4rem;
 	align-items: flex-start;
 	padding-bottom: 2rem;
 }
@@ -60,7 +60,7 @@
     overflow: hidden;
     width: 100%;
     min-width: 320px;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 3 / 4.2;
     z-index: 1;
     transition: transform 0.4s, box-shadow 0.4s, opacity 0.2s ease;
 }
