@@ -25,6 +25,15 @@
 	padding-bottom: 2.5rem;
 }
 
+/* Section header segments - keep inline on desktop, break on mobile */
+.section-segment {
+	display: inline;
+}
+
+.mobile .section-segment {
+	display: block;
+}
+
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
