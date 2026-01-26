@@ -378,7 +378,7 @@
 						<div class="card-title-wrapper">
 							<a class="card-title-link" href="https://realworld-one.com" rel="noopener" target="_blank">
 								<span class="h3 card-title">
-									_Realworld-One
+									_RW1
 									<span class="title-arrow">
 										<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
 											<path d="M7 7h10v10"></path>
@@ -1363,7 +1363,13 @@
 							cb.checked = false;
 							const otherId = cb.id.replace('team-checkbox-', 'popover-');
 							const otherPopover = document.getElementById(otherId);
-							if (otherPopover) otherPopover.classList.remove('active');
+							if (otherPopover) {
+								otherPopover.classList.remove('active');
+								// Remove flip-left from all tooltips in the closing popover
+								otherPopover.querySelectorAll('.member-role-tooltip').forEach(t => {
+									t.classList.remove('flip-left');
+								});
+							}
 						}
 					});
 					
@@ -1375,6 +1381,24 @@
 					popover.style.top = (rect.bottom - containerRect.top + 8) + 'px';
 					popover.style.left = (rect.right - containerRect.left - popover.offsetWidth) + 'px';
 					popover.classList.add('active');
+					
+					// Check if popover is near the right edge and preemptively flip all tooltips
+					requestAnimationFrame(() => {
+						const popoverRect = popover.getBoundingClientRect();
+						const viewportWidth = window.innerWidth;
+						
+						// If popover is in the right half of the viewport, flip all tooltips to the left
+						if (popoverRect.right > viewportWidth * 0.8) {
+							popover.querySelectorAll('.member-role-tooltip').forEach(tooltip => {
+								tooltip.classList.add('flip-left');
+							});
+						} else {
+							// Make sure tooltips are not flipped if popover is on the left side
+							popover.querySelectorAll('.member-role-tooltip').forEach(tooltip => {
+								tooltip.classList.remove('flip-left');
+							});
+						}
+					});
 					
 					activePopover = popover;
 					activeCheckbox = checkbox;
