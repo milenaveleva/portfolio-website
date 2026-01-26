@@ -1,10 +1,10 @@
 [id="I1694932088"] .page-content {
-	padding-left: 2rem;
-	padding-right: 2rem;
 	width: 100%;
-	align-items: center;
+    padding-left: 2rem;
+	padding-right: 2rem;
 	padding-bottom: 2rem;
-	padding-top: 2rem;
+	padding-top: 0rem;
+    align-items: center;
 }
 
 [id="I1694932088"].page {
@@ -63,11 +63,12 @@
 }
 
 .mobile [id="I1694932088"] .page-content {
-	padding-left: 2rem;
-	padding-right: 2rem;
-    padding-bottom: 2rem;
-    padding-top: 16rem;
 	width: 100%;
+    padding-left: 2rem;
+	padding-right: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 13rem;
+    align-items: flex-end;
 }
 
 .content-container h2 {
@@ -75,5 +76,5 @@
 }
 
 [id="I1694932088"] .page-layout {
-	align-items: center;
+	align-items: flex-end;
 }

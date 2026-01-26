@@ -18,11 +18,11 @@
 }
 
 .title-container {
-	padding-bottom: 2rem;
+	padding-bottom: 4rem;
 }
 
 .mobile .title-container {
-	padding-bottom: 2.5rem;
+	padding-bottom: 4rem;
 }
 
 /* Section header segments - keep inline on desktop, break on mobile */

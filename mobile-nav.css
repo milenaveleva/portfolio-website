@@ -1,12 +1,29 @@
 .mobile #hamburger-menu-btn {
     position: fixed;
-    bottom: 0;
-    right: 0;
+    bottom: 0rem;
+    right: 0rem;
+    background: transparent;
 	z-index: 10000;
-	background: transparent;
 	border: none;
 	cursor: pointer;
 	filter: drop-shadow(0 4px 8px #000000);
+}
+
+.mobile #hamburger-menu-btn::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 200px;
+	height: 200px;
+	background: radial-gradient(circle at bottom right, 
+		rgba(0,0,0,0.75) 0%, 
+		rgba(0,0,0,0.1) 45%,
+		rgba(0,0,0,0) 90%,
+        rgba(0,0,0,0) 100%
+	);
+	pointer-events: none;
+	z-index: -1;
 }
 
 .mobile .ham {

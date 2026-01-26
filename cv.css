@@ -1,10 +1,10 @@
 [id="M1100391766"] .page-content {
-	padding-left: 2rem;
-	padding-right: 2rem;
 	width: 100%;
-	align-items: center;
+    padding-left: 2rem;
+	padding-right: 2rem;
 	padding-bottom: 2rem;
-	padding-top: 2rem;
+	padding-top: 0rem;
+    align-items: center;
 }
 
 [id="M1100391766"].page {
@@ -63,17 +63,14 @@
 }
 
 .mobile [id="M1100391766"] .page-content {
-	padding-left: 2rem;
+	width: 100%;
+    padding-left: 2rem;
 	padding-right: 2rem;
-    padding-bottom: 2rem;
-    padding-top: 16rem;
-    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 13rem;
+    align-items: flex-end;
 }
 
 .content-container h2 {
 	line-height: 5rem;
-}
-
-[id="M1100391766"] .page-layout {
-	align-items: center;
 }
