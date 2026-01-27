@@ -1360,19 +1360,58 @@
 			const popoverId = checkbox.id.replace('team-checkbox-', 'popover-');
 			const popover = document.getElementById(popoverId);
 			const iconWrapper = checkbox.closest('.team-icon-wrapper');
+			const card = checkbox.closest('.portfolio-card');
 			
-			if (!popover || !iconWrapper) return;
+			if (!popover || !iconWrapper || !card) return;
+			
+			let isMouseOverCard = false;
+			let isMouseOverPopover = false;
+			let outsideClickHandler = null;
+			
+			// Track mouse over card
+			card.addEventListener('mouseenter', () => { isMouseOverCard = true; });
+			card.addEventListener('mouseleave', () => {
+				isMouseOverCard = false;
+				checkAndClose();
+			});
+			
+			// Track mouse over popover
+			popover.addEventListener('mouseenter', () => { isMouseOverPopover = true; });
+			popover.addEventListener('mouseleave', () => {
+				isMouseOverPopover = false;
+				checkAndClose();
+			});
+			
+			function checkAndClose() {
+				// Only close if mouse is neither over card nor popover, and popover is open
+				setTimeout(() => {
+					if (!isMouseOverCard && !isMouseOverPopover && checkbox.checked) {
+						checkbox.checked = false;
+						popover.classList.remove('active');
+						card.classList.remove('popover-hovered');
+						if (activePopover === popover) {
+							activePopover = null;
+							activeCheckbox = null;
+						}
+						if (outsideClickHandler) {
+							document.removeEventListener('click', outsideClickHandler);
+							outsideClickHandler = null;
+						}
+					}
+				}, 100); // Small delay to allow mouse to move between card and popover
+			}
 			
 			checkbox.addEventListener('change', function() {
 				console.log('Checkbox changed:', checkbox.id, 'checked:', checkbox.checked);
 				
 				if (checkbox.checked) {
-					// Close other popovers
+					// Close other popovers and remove their card hover states
 					checkboxes.forEach((cb) => {
 						if (cb !== checkbox && cb.checked) {
 							cb.checked = false;
 							const otherId = cb.id.replace('team-checkbox-', 'popover-');
 							const otherPopover = document.getElementById(otherId);
+							const otherCard = cb.closest('.portfolio-card');
 							if (otherPopover) {
 								otherPopover.classList.remove('active');
 								// Remove flip-left from all tooltips in the closing popover
@@ -1380,25 +1419,31 @@
 									t.classList.remove('flip-left');
 								});
 							}
+							if (otherCard) {
+								otherCard.classList.remove('popover-hovered');
+							}
 						}
 					});
 					
-				// Position and show this popover
-				const rect = iconWrapper.getBoundingClientRect();
-				const container = document.querySelector('.content-container');
-				const containerRect = container ? container.getBoundingClientRect() : { top: 0, left: 0 };
-				
-				// Make popover visible to measure it
-				popover.style.visibility = 'hidden';
-				popover.classList.add('active');
-				
-				// Measure and position
-				const popoverWidth = popover.offsetWidth;
-				popover.style.top = (rect.bottom - containerRect.top + 8) + 'px';
-				popover.style.left = (rect.right - containerRect.left - popoverWidth) + 'px';
-				
-				// Now make it visible
-				popover.style.visibility = '';
+					// Position and show this popover
+					const rect = iconWrapper.getBoundingClientRect();
+					const container = document.querySelector('.content-container');
+					const containerRect = container ? container.getBoundingClientRect() : { top: 0, left: 0 };
+					
+					// Make popover visible to measure it
+					popover.style.visibility = 'hidden';
+					popover.classList.add('active');
+					
+					// Measure and position
+					const popoverWidth = popover.offsetWidth;
+					popover.style.top = (rect.bottom - containerRect.top + 8) + 'px';
+					popover.style.left = (rect.right - containerRect.left - popoverWidth) + 'px';
+					
+					// Now make it visible
+					popover.style.visibility = '';
+					
+					// Add hover state to card
+					card.classList.add('popover-hovered');
 					
 					// Check if popover is near the right edge and preemptively flip all tooltips
 					requestAnimationFrame(() => {
@@ -1423,22 +1468,29 @@
 					
 					// Close on outside click
 					setTimeout(() => {
-						const closeHandler = (e) => {
+						outsideClickHandler = (e) => {
 							if (!iconWrapper.contains(e.target) && !popover.contains(e.target)) {
 								checkbox.checked = false;
 								popover.classList.remove('active');
+								card.classList.remove('popover-hovered');
 								activePopover = null;
 								activeCheckbox = null;
-								document.removeEventListener('click', closeHandler);
+								document.removeEventListener('click', outsideClickHandler);
+								outsideClickHandler = null;
 							}
 						};
-						document.addEventListener('click', closeHandler);
+						document.addEventListener('click', outsideClickHandler);
 					}, 10);
 				} else {
 					popover.classList.remove('active');
+					card.classList.remove('popover-hovered');
 					if (activePopover === popover) {
 						activePopover = null;
 						activeCheckbox = null;
+					}
+					if (outsideClickHandler) {
+						document.removeEventListener('click', outsideClickHandler);
+						outsideClickHandler = null;
 					}
 				}
 			});
