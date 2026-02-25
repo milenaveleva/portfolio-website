@@ -108,6 +108,13 @@ export default function App() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Scrollbar: accent color, dark track */
+        :root { scrollbar-width: thin; scrollbar-color: ${ACCENT} ${BG_DEEP}; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: ${BG_DEEP}; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb { background: ${ACCENT}; border-radius: 5px; border: 2px solid ${BG_DEEP}; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff5522; }
+        ::-webkit-scrollbar-corner { background: ${BG_DEEP}; }
         .playfair { font-family: 'Playfair Display', Georgia, serif; }
         .mono { font-family: 'Space Mono', 'Courier New', monospace; }
         @keyframes shimmer { 0%,100%{opacity:.4} 50%{opacity:1} }
@@ -140,6 +147,7 @@ export default function App() {
           .hero-layout { flex-direction: column !important; gap: 0.25rem !important; }
           .hero-terminal { padding-top: 0.5rem !important; width: 100% !important; max-width: 100% !important; flex: 1 1 100% !important; }
           .hero-video-wrap { min-height: 200px; aspect-ratio: 16/9; }
+          .site-pad { padding-left: 2rem !important; padding-right: 2rem !important; }
           .toc-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: 1fr !important; }
           .config-row { grid-template-columns: 1fr !important; }
@@ -148,20 +156,20 @@ export default function App() {
       `}</style>
 
       {/* ═══ HEADER ═══ */}
-      <header style={{ borderBottom: `1px solid ${BORDER}`, padding: "0.9rem 3rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span className="mono" style={{ fontSize: "0.65rem", letterSpacing: "0.3em", color: ACCENT }}>OPENCLAW — SETUP GUIDE</span>
-        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+      <header className="site-pad" style={{ borderBottom: `1px solid ${BORDER}`, padding: "0.9rem 3rem", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "1rem" }}>
+        <span className="mono" style={{ fontSize: "0.65rem", letterSpacing: "0.3em", color: ACCENT, justifySelf: "start" }}>OPENCLAW — SETUP GUIDE</span>
+        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", justifySelf: "center" }}>
           {["DOCS", "GITHUB", "TAILSCALE"].map(l => (
             <span key={l} className="mono" style={{ fontSize: "0.6rem", letterSpacing: "0.25em", color: TEXT_DIM, cursor: "pointer" }}>{l}</span>
           ))}
         </div>
-        <span className="mono" style={{ fontSize: "0.6rem", letterSpacing: "0.2em", color: TEXT_DIM }}>
+        <span className="mono" style={{ fontSize: "0.6rem", letterSpacing: "0.2em", color: TEXT_DIM, justifySelf: "end" }}>
           🦞 <span className="shimmer" style={{ color: ACCENT }}>v1.0</span>
         </span>
       </header>
 
       {/* ═══ HERO ═══ */}
-      <section style={{ padding: "3rem 3rem 0", maxWidth: "1400px", margin: "0 auto" }}>
+      <section className="site-pad" style={{ padding: "3rem 3rem 0", maxWidth: "1400px", margin: "0 auto" }}>
         <div className="f0 hero-video-wrap" style={{ position: "relative", borderRadius: "24px", overflow: "hidden", border: `1px solid ${ACCENT_BORDER}` }}>
           <img
             src={heroImage}
@@ -210,7 +218,7 @@ export default function App() {
       </section>
 
       {/* ═══ STATS STRIP ═══ */}
-      <section style={{ padding: "3rem 3rem", maxWidth: "1400px", margin: "0 auto" }}>
+      <section className="site-pad" style={{ padding: "3rem 3rem", maxWidth: "1400px", margin: "0 auto" }}>
         <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1px", background: BORDER, border: `1px solid ${BORDER}` }}>
           {[
             { Icon: Monitor, label: "SERVER", desc: "Hetzner CX23", sub: "SHARED CPU · COST-OPTIMIZED" },
@@ -230,7 +238,7 @@ export default function App() {
       </section>
 
       {/* ═══ TABLE OF CONTENTS ═══ */}
-      <section style={{ padding: "2rem 3rem 4rem", maxWidth: "1400px", margin: "0 auto" }}>
+      <section className="site-pad" style={{ padding: "2rem 3rem 4rem", maxWidth: "1400px", margin: "0 auto" }}>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2.5rem", flexWrap: "wrap", gap: "1.5rem" }}>
           <div>
             <div className="mono" style={{ fontSize: "0.6rem", letterSpacing: "0.35em", color: ACCENT, marginBottom: "1rem" }}>▸ TABLE OF CONTENTS</div>
@@ -255,7 +263,7 @@ export default function App() {
       </section>
 
       {/* ═══ GUIDE SECTIONS ═══ */}
-      <section style={{ background: BG_SECTION, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: "2rem 3rem 4rem", position: "relative", overflow: "hidden" }}>
+      <section className="site-pad" style={{ background: BG_SECTION, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: "2rem 3rem 4rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.03, backgroundImage: `linear-gradient(rgba(255,64,19,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,64,19,0.5) 1px, transparent 1px)`, backgroundSize: "40px 40px" }} />
         <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative" }}>
 
@@ -721,7 +729,7 @@ openclaw doctor`}
       </section>
 
       {/* ═══ FURTHER READING ═══ */}
-      <section style={{ padding: "4rem 3rem", maxWidth: "1400px", margin: "0 auto" }}>
+      <section className="site-pad" style={{ padding: "4rem 3rem", maxWidth: "1400px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "4rem", alignItems: "start" }}>
           <div style={{ position: "sticky", top: "3rem" }}>
             <div style={{ borderLeft: `2px solid ${ACCENT}`, paddingLeft: "1.2rem" }}>
@@ -745,7 +753,7 @@ openclaw doctor`}
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer style={{ padding: "2rem 3rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", borderTop: `1px solid ${BORDER}` }}>
+      <footer className="site-pad" style={{ padding: "2rem 3rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", borderTop: `1px solid ${BORDER}` }}>
         <span className="mono" style={{ fontSize: "0.7rem", color: ACCENT, letterSpacing: "0.15em" }}>🦞 OPENCLAW</span>
         <p className="playfair" style={{ fontStyle: "italic", color: TEXT_DIM, fontSize: "0.9rem" }}>
           Set up once. Let it run.
