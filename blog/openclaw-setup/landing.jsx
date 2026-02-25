@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Monitor, Lock, Bot } from "lucide-react";
 // Hero: ASCII art GIF (same on all viewports)
-const heroImage = "/ascii-art-2026-02-24-4.gif";
+const heroImage = "/ascii-art-2026-02-24-4-ezgif.com-optimize.gif";
 
 // Force GIF to play on mobile: reload when hero enters viewport (fixes iOS Safari etc.)
 function useHeroGifSrc() {
