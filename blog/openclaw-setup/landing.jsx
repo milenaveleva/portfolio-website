@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Monitor, Lock, Bot } from "lucide-react";
-// Hero media: video plays on loop (muted for autoplay)
+// Hero media: video plays on loop (muted for autoplay). On mobile we show a static fallback so the hero is always visible.
 const heroMedia = "/lobster.mp4";
+const heroMobileFallback = "/ascii-art-2026-02-24-4.gif";
 
 const ACCENT = "#FF4013";
 const ACCENT_DIM = "rgba(255,64,19,0.15)";
@@ -120,7 +121,10 @@ export default function App() {
         .f3 { animation: fadeUp .7s .36s both cubic-bezier(.16,1,.3,1); }
         .section-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
         .section-body.open { grid-template-rows: 1fr; }
-        .copy-btn:hover { color: ${ACCENT} !important; border-color: ${ACCENT} !important; }
+        .hero-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; max-height: min(600px, 56.25vw); }
+        .hero-video-wrap .hero-video-el,
+        .hero-video-wrap .hero-mobile-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .hero-video-wrap .hero-mobile-fallback { display: none; }
         .toc-link { background: none; border: none; cursor: pointer; text-align: left; padding: 0.45rem 0; display: flex; gap: 0.8rem; align-items: baseline; transition: color 0.15s; }
         .toc-link:hover .toc-num { color: ${ACCENT}; }
         .toc-link:hover .toc-title { color: ${TEXT}; }
@@ -139,7 +143,8 @@ export default function App() {
           .hero-layout { flex-direction: column !important; gap: 0.25rem !important; }
           .hero-terminal { padding-top: 0.5rem !important; width: 100% !important; max-width: 100% !important; flex: 1 1 100% !important; }
           .hero-video-wrap { min-height: 200px; aspect-ratio: 16/9; }
-          .hero-video-wrap video { width: 100%; height: 100%; object-fit: cover; }
+          .hero-video-wrap .hero-video-el { display: none !important; }
+          .hero-video-wrap .hero-mobile-fallback { display: block !important; width: 100%; height: 100%; object-fit: cover; }
           .toc-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: 1fr !important; }
           .config-row { grid-template-columns: 1fr !important; }
@@ -163,16 +168,25 @@ export default function App() {
       {/* ═══ HERO ═══ */}
       <section style={{ padding: "3rem 3rem 0", maxWidth: "1400px", margin: "0 auto" }}>
         <div className="f0 hero-video-wrap" style={{ position: "relative", borderRadius: "24px", overflow: "hidden", border: `1px solid ${ACCENT_BORDER}` }}>
+          {/* Desktop: video. Mobile: fallback image so hero is always visible (many mobile browsers block or hide autoplay video). */}
           <video
+            className="hero-video-el"
             src={heroMedia}
             autoPlay
             loop
             muted
             playsInline
             preload="auto"
-            fetchpriority="high"
+            fetchPriority="high"
             aria-label="OpenClaw hero video"
-            style={{ width: "100%", height: "auto", display: "block", maxHeight: "600px", objectFit: "cover", objectPosition: "center", transform: "scale(1.002)", transformOrigin: "center" }}
+            style={{ width: "100%", height: "100%", display: "block", objectFit: "cover", scale: "1.002", objectPosition: "center" }}
+          />
+          <img
+            src={heroMobileFallback}
+            alt="OpenClaw hero"
+            className="hero-mobile-fallback"
+            loading="eager"
+            style={{ display: "none" }}
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(6,13,20,0.95) 0%, rgba(6,13,20,0.3) 40%, transparent 70%)", pointerEvents: "none" }} />
         </div>
