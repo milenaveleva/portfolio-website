@@ -3,6 +3,31 @@ import { Monitor, Lock, Bot } from "lucide-react";
 // Hero: ASCII art GIF (same on all viewports)
 const heroImage = "/ascii-art-2026-02-24-4.gif";
 
+// Force GIF to play on mobile: reload when hero enters viewport (fixes iOS Safari etc.)
+function useHeroGifSrc() {
+  const [src, setSrc] = useState(heroImage);
+  const ref = useRef(null);
+  const kicked = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [e] = entries;
+        if (!e?.isIntersecting || kicked.current) return;
+        kicked.current = true;
+        setSrc((prev) => prev.split("?")[0] + "?t=" + Date.now());
+      },
+      { rootMargin: "50px", threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return { src, ref };
+}
+
 const ACCENT = "#FF4013";
 const ACCENT_DIM = "rgba(255,64,19,0.15)";
 const ACCENT_BORDER = "rgba(255,64,19,0.3)";
@@ -102,6 +127,7 @@ function Section({ id, num, title, defaultOpen = false, children }) {
 }
 
 export default function App() {
+  const { src: heroGifSrc, ref: heroImgRef } = useHeroGifSrc();
 
   return (
     <div style={{ background: BG, minHeight: "100vh", color: TEXT, overflowX: "hidden", fontFamily: "'Courier New', monospace" }}>
@@ -128,7 +154,7 @@ export default function App() {
         .section-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
         .section-body.open { grid-template-rows: 1fr; }
         .hero-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; max-height: min(600px, 56.25vw); }
-        .hero-video-wrap .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+        .hero-video-wrap .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; -webkit-transform: translateZ(0); transform: translateZ(0); backface-visibility: hidden; }
         .toc-link { background: none; border: none; cursor: pointer; text-align: left; padding: 0.45rem 0; display: flex; gap: 0.8rem; align-items: baseline; transition: color 0.15s; }
         .toc-link:hover .toc-num { color: ${ACCENT}; }
         .toc-link:hover .toc-title { color: ${TEXT}; }
@@ -170,9 +196,9 @@ export default function App() {
 
       {/* ═══ HERO ═══ */}
       <section className="site-pad" style={{ padding: "3rem 3rem 0", maxWidth: "1400px", margin: "0 auto" }}>
-        <div className="f0 hero-video-wrap" style={{ position: "relative", borderRadius: "24px", overflow: "hidden", border: `1px solid ${ACCENT_BORDER}` }}>
+        <div ref={heroImgRef} className="f0 hero-video-wrap" style={{ position: "relative", borderRadius: "24px", overflow: "hidden", border: `1px solid ${ACCENT_BORDER}` }}>
           <img
-            src={heroImage}
+            src={heroGifSrc}
             alt="OpenClaw hero — ASCII world map"
             className="hero-img"
             loading="eager"
