@@ -138,6 +138,8 @@ export default function App() {
         @media(max-width:768px) {
           .hero-layout { flex-direction: column !important; gap: 0.25rem !important; }
           .hero-terminal { padding-top: 0.5rem !important; width: 100% !important; max-width: 100% !important; flex: 1 1 100% !important; }
+          .hero-video-wrap { min-height: 200px; aspect-ratio: 16/9; }
+          .hero-video-wrap video { width: 100%; height: 100%; object-fit: cover; }
           .toc-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: 1fr !important; }
           .config-row { grid-template-columns: 1fr !important; }
@@ -160,7 +162,7 @@ export default function App() {
 
       {/* ═══ HERO ═══ */}
       <section style={{ padding: "3rem 3rem 0", maxWidth: "1400px", margin: "0 auto" }}>
-        <div className="f0" style={{ position: "relative", borderRadius: "24px", overflow: "hidden", border: `1px solid ${ACCENT_BORDER}` }}>
+        <div className="f0 hero-video-wrap" style={{ position: "relative", borderRadius: "24px", overflow: "hidden", border: `1px solid ${ACCENT_BORDER}` }}>
           <video
             src={heroMedia}
             autoPlay
@@ -168,7 +170,7 @@ export default function App() {
             muted
             playsInline
             preload="auto"
-            fetchPriority="high"
+            fetchpriority="high"
             aria-label="OpenClaw hero video"
             style={{ width: "100%", height: "auto", display: "block", maxHeight: "600px", objectFit: "cover", objectPosition: "center", transform: "scale(1.002)", transformOrigin: "center" }}
           />
