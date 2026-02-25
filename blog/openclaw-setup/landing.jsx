@@ -185,7 +185,7 @@ export default function App() {
       <header className="site-pad" style={{ borderBottom: `1px solid ${BORDER}`, padding: "0.9rem 3rem", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "1rem" }}>
         <span className="mono" style={{ fontSize: "0.65rem", letterSpacing: "0.3em", color: ACCENT, justifySelf: "start" }}>OPENCLAW — SETUP GUIDE</span>
         <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", justifySelf: "center" }}>
-          {["DOCS", "GITHUB", "TAILSCALE"].map(l => (
+          {[""].map(l => (
             <span key={l} className="mono" style={{ fontSize: "0.6rem", letterSpacing: "0.25em", color: TEXT_DIM, cursor: "pointer" }}>{l}</span>
           ))}
         </div>
@@ -761,7 +761,7 @@ openclaw doctor`}
             <div style={{ borderLeft: `2px solid ${ACCENT}`, paddingLeft: "1.2rem" }}>
               <div className="mono" style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: ACCENT, marginBottom: "0.8rem" }}>FURTHER READING</div>
               <p className="playfair" style={{ fontSize: "1.5rem", fontStyle: "italic", lineHeight: 1.3, color: TEXT }}>
-                "Set it up once,<br />let it run."
+                "Exfoliate, exfoliate, exfoliate!"<br />
               </p>
             </div>
           </div>
@@ -781,9 +781,9 @@ openclaw doctor`}
       {/* ═══ FOOTER ═══ */}
       <footer className="site-pad" style={{ padding: "2rem 3rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", borderTop: `1px solid ${BORDER}` }}>
         <span className="mono" style={{ fontSize: "0.7rem", color: ACCENT, letterSpacing: "0.15em" }}>🦞 OPENCLAW</span>
-        <p className="playfair" style={{ fontStyle: "italic", color: TEXT_DIM, fontSize: "0.9rem" }}>
-          Set up once. Let it run.
-        </p>
+        <a href="https://x.com/_picimili" className="playfair" style={{color: TEXT, fontSize: "0.9rem", textDecoration: "none" }}>
+          @pici_mili
+        </a>
         <span className="mono" style={{ fontSize: "0.6rem", color: TEXT_DIM, letterSpacing: "0.25em" }}>VOL. I</span>
       </footer>
     </div>
